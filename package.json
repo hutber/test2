@@ -1,0 +1,22 @@
+{
+  "name": "hutber-test-lazy-func",
+  "version": "1.0.0",
+  "description": "Jamie Hutber's Test for lazy funcs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require babel-core/register './**/*.test.js' "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hutber/test2.git"
+  },
+  "author": "Jamie Hutber",
+  "homepage": "https://github.com/hutber/test2#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "mocha": "^4.1.0"
+  }
+}
