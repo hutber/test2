@@ -1,42 +1,31 @@
-class Lazy {
+export default class Lazy {
   constructor() {
-    this.builtUpFuncs = [];
-  }
-
-  singleArgAppliedToAllFunctions(numberItem) {
-    return this.builtUpFuncs.map(addObject => {
-      if (addObject.arg) {
-        return addObject['func'](addObject.arg, numberItem)
-      } else {
-        return addObject['func'](numberItem)
-      }
-    })
+    this.store = [];
   }
 
   add() {
-    const funcObject = {
-      func: arguments[0],
-    };
-    if (arguments[1]) funcObject.arg = arguments[1];
-    this.builtUpFuncs.push(funcObject)
+    const args = Array.prototype.slice.call(arguments);
+    this.store.push({
+      func: args[0],
+      arg: args.slice(1)
+    });
     return this;
   }
 
-  evaluate(target) {
-    const totalNumber = target.map((numberItem, index) => {
-      return this.singleArgAppliedToAllFunctions(numberItem).reduce((a, b) => a + b)
-    })
-    console.info(totalNumber);
+  evaluate(args) {
+    return args.map((arg) =>
+      this.store.reduce((acc, func) => {
+          return func.func.call(null, func.arg.length ? func.arg : null, acc)}
+        , arg)
+    );
   }
 }
 
-const computation = new Lazy();
-computation.add(function timesTwo(a) {
-  return a * 2;
-}) // simple function
-.add(function plus(a, b) {
-  return a + b;
-}, 1) // a plus function that will be given 1 as its first argument
-.evaluate([1, 2, 3]); // returns [3, 5, 7]
 
-Thanks for the test chaps, I don't love the solution as its using arguments[] and is britle af :D But with 30mins ¯\_(ツ)_/¯
+
+//My appoligies for the last test. I was under a little pressure to get these tests finished and ended up doing yours in the console in Chrome.
+//Also I feel I should give an explanation to this as well.
+`const funcObject = {
+  func: arguments[0],
+};`
+//I believed this line: "Don't be defensive about the degenerate cases (E.g. bad / missing arguments)" you wanted us to use things that would be break so we could go over them in the face-to-face
