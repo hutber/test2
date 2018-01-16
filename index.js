@@ -1,29 +1,26 @@
 export default class Lazy {
   constructor() {
-    this.store = [];
+    this.builtUpFuncs = [];
   }
 
   add() {
-    const args = Array.prototype.slice.call(arguments);
-    this.store.push({
-      func: args[0],
-      arg: args.slice(1)
+    const newArgs = Array.prototype.slice.call(arguments);
+    this.builtUpFuncs.push({
+      func: newArgs[0],
+      arg:  typeof newArgs[1] === "undefined"  ? [] : [newArgs[1]],
     });
     return this;
   }
 
-  evaluate(args) {
-    return args.map((arg) =>
-      this.store.reduce((acc, func) => {
-          return func.func.call(null, func.arg.length ? func.arg : null, acc)}
-        , arg)
+  evaluate(target) {
+    return target.map((args) =>
+      this.builtUpFuncs.reduce((acc, cur) => {
+        return cur.func.apply(null, cur.arg.concat(acc))
+      }, args)
     );
   }
 }
-
-
-
-//My appoligies for the last test. I was under a little pressure to get these tests finished and ended up doing yours in the console in Chrome.
+//My apologies for the last test. I was under a little pressure to get these tests finished and ended up doing yours in the console in Chrome.
 //Also I feel I should give an explanation to this as well.
 `const funcObject = {
   func: arguments[0],

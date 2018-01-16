@@ -6,7 +6,7 @@ import Lazy from './';
 describe('Lazy challenge', function() {
   it('It should return expected lazy array', function() {
     const lazyClass = new Lazy();
-    const desiredReturn = [4,7,10];
+    const desiredReturn = [3,5,7];
 
     const returnValue =
       lazyClass
